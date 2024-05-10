@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:kuis_statemanagement/pages/register_page.dart';
+import 'package:provider/provider.dart';
+import 'package:kuis_statemanagement/provider/auth_provider.dart';
 
-class LoginPage extends StatelessWidget {
-  const LoginPage({Key? key}) : super(key: key);
+class LoginScreen extends StatefulWidget {
+  @override
+  _LoginScreenState createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  final _formKey = GlobalKey<FormState>();
+  final _usernameController = TextEditingController();
+  final _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -11,58 +19,36 @@ class LoginPage extends StatelessWidget {
         title: Text('Login'),
       ),
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(20.0),
         child: Form(
+          key: _formKey,
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               TextFormField(
+                controller: _usernameController,
                 decoration: InputDecoration(
                   labelText: 'Username',
-                  border: OutlineInputBorder(),
                 ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Masukkan Username Anda';
-                  }
-                  return null;
-                },
               ),
-              SizedBox(height: 16.0),
               TextFormField(
-                obscureText: true,
+                controller: _passwordController,
                 decoration: InputDecoration(
                   labelText: 'Password',
-                  border: OutlineInputBorder(),
                 ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Masukkan Password Anda';
-                  }
-                  return null;
-                },
+                obscureText: true,
               ),
-              SizedBox(height: 16.0),
+              SizedBox(height: 20),
               ElevatedButton(
-                onPressed: () {},
-                child: Text('Login'),
-              ),
-              SizedBox(height: 8.0),
-              Text("Belum Punya Akun?"),
-              SizedBox(height: 10.0),
-              InkWell(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => RegisterPage()),
-                  );
+                onPressed: () async {
+                  if(_formKey.currentState != null) {
+                    if (_formKey.currentState!.validate()) {
+                      _formKey.currentState!.save();
+                      final provider = Provider.of<AuthProvider>(context, listen: false);
+                      await provider.login(_usernameController.text, _passwordController.text);
+                    }
+                  }
                 },
-                child: Text(
-                  'Daftar disini',
-                  style: TextStyle(
-                    decoration: TextDecoration.underline,
-                  ),
-                ),
+                child: Text('Login'),
               ),
             ],
           ),
