@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:kuis_statemanagement/providers/auth_provider.dart';
 import 'package:kuis_statemanagement/providers/item_provider.dart';
 import 'package:kuis_statemanagement/models/item.dart';
+import 'package:kuis_statemanagement/providers/item_quantity_notifier.dart';
+import 'package:kuis_statemanagement/widgets/item_quantity.dart';
 import 'package:provider/provider.dart';
 import 'package:kuis_statemanagement/globals.dart';
 
@@ -11,12 +13,22 @@ class DaftarMakanan extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    print("build daftar makanan");
+
     final List<Item> items = Provider.of<ItemProvider>(context).items;
     final token = Provider.of<AuthProvider>(context).token;
+
+    Map<int, int> itemQuantities = Provider.of<ItemQuantityNotifier>(context, listen: false).getAllItemQuantities();
+
+
+
 
     if (items.isEmpty) {
       Provider.of<ItemProvider>(context, listen: false).fetchItems(token);
     }
+
+
 
     return Consumer<ItemProvider>(
       builder: (context, itemModel, _) {
@@ -31,6 +43,9 @@ class DaftarMakanan extends StatelessWidget {
               itemCount: items.length,
               itemBuilder: (context, index) {
                 final item = items[index];
+                if(!showButtons && itemQuantities[item.id] == null) {
+                  return SizedBox(width: 0, height: 0,);
+                }
                 return Padding(
                   padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                   child: Column(
@@ -89,41 +104,13 @@ class DaftarMakanan extends StatelessWidget {
                                           ),
                                         ),
                                         showButtons ?
-                                        Row(
-                                            children: [
-                                              IconButton(
-                                                onPressed: () {},
-                                                icon: Icon(Icons.remove_circle_outline_outlined),
-                                              ),
-
-                                              SizedBox(
-                                              width: 5,
-                                              ),
-
-
-                                              Text(
-                                                "${item.quantity.toString()}",  // counter
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(fontSize: 15),
-                                              ),
-
-                                              SizedBox(
-                                                width: 5,
-                                              ),
-
-                                              IconButton(
-                                                onPressed: () {}, // add item
-                                                icon: Icon(Icons.add_circle_outline_outlined),
-                                              )
-
-                                            ],
-                                          )
+                                        ItemQuantity(item_id: item.id)
                                           : // keranjang
                                           Row(
                                             children: [
 
                                               Text(
-                                                "${item.quantity.toString()}",  // counter
+                                                "${itemQuantities[item.id]}",  // counter
                                                 textAlign: TextAlign.center,
                                                 style: TextStyle(fontSize: 15),
                                               ),

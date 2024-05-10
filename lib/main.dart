@@ -3,6 +3,7 @@ import 'package:kuis_statemanagement/pages/home_page.dart';
 import 'package:kuis_statemanagement/pages/keranjang_page.dart';
 import 'package:kuis_statemanagement/pages/login_page.dart';
 import 'package:kuis_statemanagement/providers/item_provider.dart';
+import 'package:kuis_statemanagement/providers/item_quantity_notifier.dart';
 import 'package:kuis_statemanagement/providers/login_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:kuis_statemanagement/providers/auth_provider.dart';
@@ -16,6 +17,7 @@ void main() {
         ChangeNotifierProvider(create: (_) => LoginProvider()),
         ChangeNotifierProvider(create: (_) => UserProvider()),
         ChangeNotifierProvider(create: (_) => ItemProvider()),
+        ChangeNotifierProvider(create: (_) => ItemQuantityNotifier()),
       ],
       child: MyApp(),
     ),
