@@ -38,7 +38,8 @@ class DaftarMakanan extends StatelessWidget {
           );
         } else {
           return Container(
-            height: MediaQuery.of(context).size.height * 0.8, // Set a finite height
+            height:
+                MediaQuery.of(context).size.height * 0.8, // Set a finite height
             child: ListView.builder(
               itemCount: items.length,
               itemBuilder: (context, index) {
@@ -82,20 +83,24 @@ class DaftarMakanan extends StatelessWidget {
                                 width: 190,
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
                                   children: [
                                     Text(
                                       "${item.title}",
                                       style: TextStyle(
-                                          fontSize: 20, fontWeight: FontWeight.bold),
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold),
                                     ),
                                     Text(
                                       "${item.description}",
                                       style: TextStyle(
-                                          fontSize: 12, fontWeight: FontWeight.w300),
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w300),
                                     ),
                                     Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(
                                           "\Rp ${item.price}",
@@ -103,6 +108,7 @@ class DaftarMakanan extends StatelessWidget {
                                             fontSize: 17,
                                           ),
                                         ),
+
                                         showButtons ?
                                         ItemQuantity(item_id: item.id)
                                           : // keranjang
@@ -122,11 +128,8 @@ class DaftarMakanan extends StatelessWidget {
                                               IconButton(
                                                 onPressed: () {}, // add item
                                                 icon: Icon(Icons.remove_circle_outline_outlined),
+
                                               )
-
-                                            ],
-                                          )
-
                                       ],
                                     ),
                                   ],

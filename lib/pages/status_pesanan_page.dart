@@ -1,47 +1,45 @@
 import 'package:flutter/material.dart';
-
-// Model untuk status pesanan
-class StatusPesanan {
-  final String status;
-
-  StatusPesanan({required this.status});
-}
-
-// Contoh data status pesanan
-List<StatusPesanan> statusPesananList = [
-  StatusPesanan(status: 'belum bayar'),
-  StatusPesanan(status: 'sudah bayar'),
-  StatusPesanan(status: 'pesanan diterima'),
-  StatusPesanan(status: 'pesanan diantar'),
-  StatusPesanan(status: 'pesanan selesai'),
-];
+import 'package:provider/provider.dart';
+import 'package:kuis_statemanagement/providers/status_provider.dart';
 
 class StatusPesananPage extends StatelessWidget {
+  final int userId; // Mendefinisikan userId
+
+  const StatusPesananPage({Key? key, required this.userId}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    // Mendapatkan instance dari StatusProvider
+    final statusProvider = Provider.of<StatusProvider>(context, listen: false);
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Status Pesanan'),
       ),
-      body: ListView.builder(
-        itemCount: statusPesananList.length,
-        itemBuilder: (context, index) {
-          final statusPesanan = statusPesananList[index];
-          return ListTile(
-            title: Text('${statusPesanan.status}'),
-          );
-        },
+      body: Consumer<StatusProvider>(
+        builder: (context, statusProvider, _) => ListView.builder(
+          itemCount: statusProvider.statusData.length,
+          itemBuilder: (context, index) {
+            final statusPesanan = statusProvider.statusData[index];
+            return ListTile(
+              title: Text('${statusPesanan.status}'),
+            );
+          },
+        ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // Update Status Pesanan
-          statusPesananList = [
-            StatusPesanan(status: 'belum bayar'),
-            StatusPesanan(status: 'sudah bayar'),
-            StatusPesanan(status: 'pesanan diterima'),
-            StatusPesanan(status: 'pesanan diantar'),
-            StatusPesanan(status: 'pesanan selesai'),
-          ];
+        onPressed: () async {
+          // Mendapatkan instance dari StatusProvider
+          final statusProvider =
+              Provider.of<StatusProvider>(context, listen: false);
+          await statusProvider.fetchStatus(userId);
+          if (statusProvider.statusData.isNotEmpty) {
+            if (statusProvider.statusData[0].status == 'pesanan diterima') {
+              statusProvider.postDiantar(userId);
+            } else if (statusProvider.statusData[0].status ==
+                'pesanan sedang diantarkan') {
+              statusProvider.postDiterima(userId);
+            }
+          }
         },
         child: Icon(Icons.refresh),
       ),

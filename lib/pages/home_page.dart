@@ -105,7 +105,10 @@ import 'package:kuis_statemanagement/widgets/item_quantity.dart';
                     // print(itemQuantities);
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => KeranjangPage()),
+                      MaterialPageRoute(
+                          builder: (context) => KeranjangPage(
+                                userId: userProvider.user!.id,
+                              )),
                     );
                   },
                   child: badges.Badge(
