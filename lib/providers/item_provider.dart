@@ -12,7 +12,7 @@ class ItemProvider with ChangeNotifier {
 
   // Getter for items
   List<Item> get items => _items;
-  List<Item> get selectedItems => _selectedItems;
+  // List<Item> get selectedItems => _selectedItems;
 
   Future<void> fetchItems(String? token) async {
     final response = await http.get(
@@ -34,37 +34,37 @@ class ItemProvider with ChangeNotifier {
     }
   }
 
-  void addItemToSelected(Item item) {
-    final existingItem = _selectedItems.firstWhere(
-      (selectedItem) => selectedItem.id == item.id,
-      orElse: () => Item(id: item.id, title: item.title, description: item.description, img_name: item.img_name, price: item.price),
-    );
+  // void addItemToSelected(Item item) {
+  //   final existingItem = _selectedItems.firstWhere(
+  //     (selectedItem) => selectedItem.id == item.id,
+  //     orElse: () => Item(id: item.id, title: item.title, description: item.description, img_name: item.img_name, price: item.price),
+  //   );
 
-    if (existingItem.quantity < item.quantity) {
-      existingItem.quantity++;
-    }
+  //   if (existingItem.quantity < item.quantity) {
+  //     existingItem.quantity++;
+  //   }
 
-    if (!_selectedItems.contains(existingItem)) {
-      _selectedItems.add(existingItem);
-    }
-    notifyListeners(); // Notify listeners of change
-  }
+  //   if (!_selectedItems.contains(existingItem)) {
+  //     _selectedItems.add(existingItem);
+  //   }
+  //   notifyListeners(); // Notify listeners of change
+  // }
 
-  // Method to remove item from selected items
-  void removeItemFromSelected(Item item) {
-    final existingItem = _selectedItems.firstWhere(
-      (selectedItem) => selectedItem.id == item.id,
-      orElse: () => Item(id: item.id, title: item.title, description: item.description, img_name: item.img_name, price: item.price),
-    );
+  // // Method to remove item from selected items
+  // void removeItemFromSelected(Item item) {
+  //   final existingItem = _selectedItems.firstWhere(
+  //     (selectedItem) => selectedItem.id == item.id,
+  //     orElse: () => Item(id: item.id, title: item.title, description: item.description, img_name: item.img_name, price: item.price),
+  //   );
 
-    if (existingItem.quantity > 0) {
-      existingItem.quantity--;
-    }
+  //   if (existingItem.quantity > 0) {
+  //     existingItem.quantity--;
+  //   }
 
-    if (existingItem.quantity == 0) {
-      _selectedItems.remove(existingItem);
-    }
+  //   if (existingItem.quantity == 0) {
+  //     _selectedItems.remove(existingItem);
+  //   }
 
-    notifyListeners(); // Notify listeners of change
-  }
+  //   notifyListeners(); // Notify listeners of change
+  // }
 }

@@ -7,9 +7,8 @@ class Item {
   final int price;
   final String description;
   final String img_name;
-  int quantity;
 
-  Item({required this.id, required this.title, required this.description, required this.img_name, required this.price, this.quantity = 0});
+  Item({required this.id, required this.title, required this.description, required this.img_name, required this.price});
 
   factory Item.fromJson(Map<String, dynamic> json) {
     return Item(
