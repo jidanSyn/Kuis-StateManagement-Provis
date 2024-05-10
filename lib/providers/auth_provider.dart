@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:kuis_statemanagement/globals.dart';
 
 
 import 'package:flutter/material.dart';
@@ -17,7 +18,7 @@ class AuthProvider with ChangeNotifier {
     print('Payload for login: ${jsonEncode({'username': username, 'password': password})}');
 
     final response = await http.post(
-      Uri.parse('http://146.190.109.66:8000/login'),
+      Uri.parse(api_url + '/login'),
       headers: {
         'Content-Type': 'application/json',
       },
@@ -40,7 +41,7 @@ class AuthProvider with ChangeNotifier {
 
   Future<void> register(String username, String password) async {
     final response = await http.post(
-      Uri.parse('http://146.190.109.66:8000/users/'),
+      Uri.parse(api_url+'/users/'),
       headers: {
         'Content-Type': 'application/json',
       },

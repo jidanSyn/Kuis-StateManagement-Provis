@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:kuis_statemanagement/globals.dart';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -12,7 +13,7 @@ class UserProvider with ChangeNotifier {
 
   Future<void> fetchUser(int? userId, String? token) async {
     final response = await http.get(
-      Uri.parse('http://146.190.109.66:8000/users/${userId}'),
+      Uri.parse(api_url + '/users/${userId}'),
       headers: {
         'Content-Type': 'application/json',
         'Authorization':'Bearer $token'
