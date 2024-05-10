@@ -93,9 +93,25 @@ class HomePage extends StatelessWidget {
                 DaftarMakanan(),
               ],
             ),
+            floatingActionButton: FloatingActionButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => KeranjangPage()),
+                );
+              },
+              child: badges.Badge(
+                badgeContent: Text(
+                  '3',
+                  style: TextStyle(color: Colors.white, fontSize: 10),
+                ),
+                child: Icon(Icons.shopping_cart),
+              )),
+
           );
         }
       },
+
     );
   }
 
