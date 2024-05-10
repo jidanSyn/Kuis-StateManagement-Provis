@@ -13,39 +13,37 @@ class DaftarMakanan extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     print("build daftar makanan");
 
     final List<Item> items = Provider.of<ItemProvider>(context).items;
     final token = Provider.of<AuthProvider>(context).token;
 
-    Map<int, int> itemQuantities = Provider.of<ItemQuantityNotifier>(context, listen: false).getAllItemQuantities();
-
-
-
+    Map<int, int> itemQuantities =
+        Provider.of<ItemQuantityNotifier>(context, listen: false)
+            .getAllItemQuantities();
 
     if (items.isEmpty) {
       Provider.of<ItemProvider>(context, listen: false).fetchItems(token);
     }
 
-
-
     return Consumer<ItemProvider>(
-      builder: (context, itemModel, _) {
+      builder: (context, itemModel, child) {
         if (items.isEmpty) {
           return Center(
             child: CircularProgressIndicator(),
           );
         } else {
           return Container(
-            height:
-                MediaQuery.of(context).size.height * 0.8, // Set a finite height
+            height: MediaQuery.of(context).size.height * 0.8, // Set a finite height
             child: ListView.builder(
               itemCount: items.length,
               itemBuilder: (context, index) {
                 final item = items[index];
-                if(!showButtons && itemQuantities[item.id] == null) {
-                  return SizedBox(width: 0, height: 0,);
+                if (!showButtons && itemQuantities[item.id] == null) {
+                  return SizedBox(
+                    width: 0,
+                    height: 0,
+                  );
                 }
                 return Padding(
                   padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
@@ -83,58 +81,44 @@ class DaftarMakanan extends StatelessWidget {
                                 width: 190,
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                   children: [
                                     Text(
                                       "${item.title}",
-                                      style: TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold),
+                                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                                     ),
                                     Text(
                                       "${item.description}",
-                                      style: TextStyle(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w300),
+                                      style: TextStyle(fontSize: 12, fontWeight: FontWeight.w300),
                                     ),
                                     Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(
                                           "\Rp ${item.price}",
-                                          style: TextStyle(
-                                            fontSize: 17,
-                                          ),
+                                          style: TextStyle(fontSize: 17),
                                         ),
-
-                                        showButtons ?
-                                        ItemQuantity(item_id: item.id)
-                                          : // keranjang
-                                          Row(
-                                            children: [
-
-                                              Text(
-                                                "${itemQuantities[item.id]}",  // counter
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(fontSize: 15),
+                                        showButtons
+                                            ? ItemQuantity(item_id: item.id)
+                                            : Row(
+                                                children: [
+                                                  Text(
+                                                    "${itemQuantities[item.id]}", // counter
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(fontSize: 15),
+                                                  ),
+                                                  SizedBox(width: 5),
+                                                  IconButton(
+                                                    onPressed: () {}, // add item
+                                                    icon: Icon(Icons.remove_circle_outline_outlined),
+                                                  ),
+                                                ],
                                               ),
-
-                                              SizedBox(
-                                                width: 5,
-                                              ),
-
-                                              IconButton(
-                                                onPressed: () {}, // add item
-                                                icon: Icon(Icons.remove_circle_outline_outlined),
-
-                                              )
                                       ],
                                     ),
                                   ],
                                 ),
-                              )
+                              ),
                             ],
                           ),
                         ),
