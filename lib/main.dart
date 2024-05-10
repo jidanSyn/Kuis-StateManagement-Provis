@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kuis_statemanagement/pages/home_page.dart';
 import 'package:kuis_statemanagement/pages/login_page.dart';
 
 void main() {
@@ -10,6 +11,6 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(debugShowCheckedModeBanner: false, home: LoginPage());
+    return MaterialApp(debugShowCheckedModeBanner: false, home: HomePage());
   }
 }
