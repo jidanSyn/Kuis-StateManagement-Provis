@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:kuis_statemanagement/pages/keranjang_page.dart';
 import 'package:kuis_statemanagement/widgets/daftar_makanan.dart';
+import 'package:badges/badges.dart' as badges;
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -41,7 +43,7 @@ class HomePage extends StatelessWidget {
                       width: 300,
                       child: Padding(
                         padding: EdgeInsets.symmetric(horizontal: 15),
-                        child: TextFormField(
+                        child: TextField(
                           decoration: InputDecoration(
                               hintText: "Cari Makanan",
                               border: InputBorder.none),
@@ -63,6 +65,20 @@ class HomePage extends StatelessWidget {
           DaftarMakanan(),
         ],
       ),
+      floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => KeranjangPage()),
+            );
+          },
+          child: badges.Badge(
+            badgeContent: Text(
+              '3',
+              style: TextStyle(color: Colors.white, fontSize: 10),
+            ),
+            child: Icon(Icons.shopping_cart),
+          )),
     );
   }
 }

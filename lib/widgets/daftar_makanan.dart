@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class DaftarMakanan extends StatelessWidget {
-  const DaftarMakanan({super.key});
+  final bool showButtons;
+  const DaftarMakanan({Key? key, this.showButtons = true}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +12,7 @@ class DaftarMakanan extends StatelessWidget {
         child: Column(
           children: [
             Padding(
-              padding: EdgeInsets.symmetric(vertical: 10),
+              padding: EdgeInsets.symmetric(vertical: 3),
               child: Container(
                 width: 380,
                 height: 150,
@@ -29,14 +30,11 @@ class DaftarMakanan extends StatelessWidget {
                 ),
                 child: Row(
                   children: [
-                    InkWell(
-                      onTap: () {},
-                      child: Container(
-                        alignment: Alignment.center,
-                        child: Image.network("images/gambar_beruang.jpg"),
-                        height: 120,
-                        width: 150,
-                      ),
+                    Container(
+                      alignment: Alignment.center,
+                      child: Image.network("images/gambar_beruang.jpg"),
+                      height: 120,
+                      width: 150,
                     ),
                     Container(
                       width: 190,
@@ -50,23 +48,61 @@ class DaftarMakanan extends StatelessWidget {
                                 fontSize: 20, fontWeight: FontWeight.bold),
                           ),
                           Text(
-                            "jsfjksfbsjkbksjbkassdhasbhfasbjfabhsjabfhjabshjbsajbfasdasdasdasfasfasfsafasfasfasfafasaasadadasdasdasdasdasdasdadsadasdasdasdasdasdassdf kwgefueqvfvfevfgjqfvgjfjeav jvasdFKWEWVFUWEFVWUGEVFGWVFGYWV",
+                            "kwgefueqvfvfevfgjqfvgjfjeavjvasdFKWEWVFUWEFVWUGEVFGWVFGYWV",
                             style: TextStyle(
-                                fontSize: 10, fontWeight: FontWeight.w300),
+                                fontSize: 12, fontWeight: FontWeight.w300),
                           ),
-                          Text(
-                            "\$Price",
-                            style: TextStyle(
-                              fontSize: 17,
-                            ),
-                          )
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "\$Price",
+                                style: TextStyle(
+                                  fontSize: 17,
+                                ),
+                              ),
+                              showButtons
+                                  ? Row(
+                                      children: [
+                                        Text(
+                                          "0",
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(fontSize: 15),
+                                        ),
+                                        SizedBox(
+                                          width: 5,
+                                        ),
+                                        IconButton(
+                                            onPressed: () {},
+                                            icon: Icon(Icons
+                                                .add_circle_outline_outlined)),
+                                      ],
+                                    )
+                                  : Row(
+                                      children: [
+                                        Text(
+                                          "0",
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(fontSize: 15),
+                                        ),
+                                        SizedBox(
+                                          width: 5,
+                                        ),
+                                        IconButton(
+                                            onPressed: () {},
+                                            icon: Icon(Icons
+                                                .remove_circle_outline_outlined)),
+                                      ],
+                                    )
+                            ],
+                          ),
                         ],
                       ),
                     )
                   ],
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),
