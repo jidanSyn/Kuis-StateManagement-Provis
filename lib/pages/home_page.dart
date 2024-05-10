@@ -2,7 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kuis_statemanagement/providers/user_provider.dart';
 import 'package:provider/provider.dart';
-
+import 'package:kuis_statemanagement/pages/keranjang_page.dart';
+import 'package:badges/badges.dart' as badges;
 import 'package:kuis_statemanagement/providers/auth_provider.dart';
 import 'package:kuis_statemanagement/widgets/daftar_makanan.dart';
 
@@ -11,8 +12,10 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final authProvider = Provider.of<AuthProvider>(context, listen: false); // Access AuthProvider
-    final userProvider = Provider.of<UserProvider>(context, listen: false); // Access AuthProvider
+    final authProvider = Provider.of<AuthProvider>(context,
+        listen: false); // Access AuthProvider
+    final userProvider = Provider.of<UserProvider>(context,
+        listen: false); // Access AuthProvider
 
     return FutureBuilder<void>(
       future: userProvider.fetchUser(authProvider.userId, authProvider.token),
@@ -94,25 +97,22 @@ class HomePage extends StatelessWidget {
               ],
             ),
             floatingActionButton: FloatingActionButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => KeranjangPage()),
-                );
-              },
-              child: badges.Badge(
-                badgeContent: Text(
-                  '3',
-                  style: TextStyle(color: Colors.white, fontSize: 10),
-                ),
-                child: Icon(Icons.shopping_cart),
-              )),
-
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => KeranjangPage()),
+                  );
+                },
+                child: badges.Badge(
+                  badgeContent: Text(
+                    '3',
+                    style: TextStyle(color: Colors.white, fontSize: 10),
+                  ),
+                  child: Icon(Icons.shopping_cart),
+                )),
           );
         }
       },
-
     );
   }
-
 }
