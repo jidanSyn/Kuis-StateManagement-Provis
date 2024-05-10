@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kuis_statemanagement/providers/auth_provider.dart';
 import 'package:kuis_statemanagement/widgets/daftar_makanan.dart';
 import 'package:kuis_statemanagement/providers/status_provider.dart';
 import 'package:kuis_statemanagement/pages/status_pesanan_page.dart';
@@ -48,7 +49,7 @@ class KeranjangPage extends StatelessWidget {
                     backgroundColor: Colors.deepPurple[100],
                   ),
                   onPressed: () async {
-                    await statusProvider.postHarapBayar(userId);
+                    await statusProvider.postHarapBayar(userId, Provider.of<AuthProvider>(context, listen: false).token);
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (context) => StatusPesananPage(

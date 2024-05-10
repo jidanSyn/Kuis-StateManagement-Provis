@@ -6,17 +6,24 @@ import 'package:http/http.dart' as http;
 
 class StatusProvider with ChangeNotifier {
   String url = api_url;
-  List<Status> _statusProvider = [];
+  Status? _statusProvider;
 
-  List<Status> get statusData => _statusProvider;
+  Status? get statusData => _statusProvider;
 
   // Fetch status
-  Future<void> fetchStatus(int userId) async {
+  Future<void> fetchStatus(int userId, String? token) async {
     try {
-      final response = await http.get(Uri.parse('$url/get_status/$userId'));
+      final response = await http.get(Uri.parse('$url/get_status/$userId'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        }
+       );
       if (response.statusCode == 200) {
         final jsonData = jsonDecode(response.body);
-        _statusProvider = [Status.fromJson(jsonData)];
+        _statusProvider = Status.fromJson(jsonData['status']);
+        print("fetch status");
+        print(_statusProvider);
         notifyListeners();
       } else {
         throw Exception('Failed to load status');
@@ -27,35 +34,38 @@ class StatusProvider with ChangeNotifier {
   }
 
   // Post status for each specific operation
-  Future<void> postHarapBayar(int userId) async {
-    await _postStatus(userId, 'set_status_harap_bayar');
+  Future<void> postHarapBayar(int userId, String? token) async {
+    await _postStatus(userId, token, 'set_status_harap_bayar');
   }
 
-  Future<void> postDiantar(int userId) async {
-    await _postStatus(userId, 'set_status_diantar');
+  Future<void> postDiantar(int userId, String? token) async {
+    await _postStatus(userId, token, 'set_status_diantar');
   }
 
-  Future<void> postPembayaran(int userId) async {
-    await _postStatus(userId, 'pembayaran');
+  Future<void> postPembayaran(int userId, String? token) async {
+    await _postStatus(userId, token, 'pembayaran');
   }
 
-  Future<void> postPenjualTerima(int userId) async {
-    await _postStatus(userId, 'set_status_penjual_terima');
+  Future<void> postPenjualTerima(int userId, String? token) async {
+    await _postStatus(userId, token, 'set_status_penjual_terima');
   }
 
-  Future<void> postPenjualTolak(int userId) async {
-    await _postStatus(userId, 'set_status_penjual_tolak');
+  Future<void> postPenjualTolak(int userId, String? token) async {
+    await _postStatus(userId, token, 'set_status_penjual_tolak');
   }
 
-  Future<void> postDiterima(int userId) async {
-    await _postStatus(userId, 'set_status_diterima');
+  Future<void> postDiterima(int userId, String? token) async {
+    await _postStatus(userId, token, 'set_status_diterima');
   }
 
-  Future<void> _postStatus(int userId, String endpoint) async {
+  Future<void> _postStatus(int userId, String? token, String endpoint) async {
     try {
       final response = await http.post(
         Uri.parse('$url/$endpoint/$userId'),
-        headers: {'Content-Type': 'application/json'},
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+          },
       );
 
       if (response.statusCode == 200) {
