@@ -100,7 +100,10 @@ class HomePage extends StatelessWidget {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => KeranjangPage()),
+                    MaterialPageRoute(
+                        builder: (context) => KeranjangPage(
+                              userId: userProvider.user!.id,
+                            )),
                   );
                 },
                 child: badges.Badge(
