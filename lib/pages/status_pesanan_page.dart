@@ -174,6 +174,10 @@ class StatusPesananPage extends StatelessWidget {
                         userId,
                         Provider.of<AuthProvider>(context, listen: false).token,
                       );
+                      await cartProvider.deleteAllItemCart(
+                        userId,
+                        Provider.of<AuthProvider>(context, listen: false).token,
+                      );
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(builder: (context) => HomePage()),
