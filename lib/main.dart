@@ -13,7 +13,7 @@ import 'package:kuis_statemanagement/providers/user_provider.dart';
 
 /*
   Kuis Provis State Management
-  Anggota:
+  Anggota Kelompok 8:
     - Alfen Fajri Nurulhaq (2201431)
     - Jidan Abdurahman Aufan (2205422)
  */
@@ -26,14 +26,17 @@ void main() {
         ChangeNotifierProvider<LoginProvider>(create: (_) => LoginProvider()),
         ChangeNotifierProvider<UserProvider>(create: (_) => UserProvider()),
         ChangeNotifierProvider<ItemProvider>(create: (_) => ItemProvider()),
-        ChangeNotifierProvider<ItemQuantityNotifier>(create: (_) => ItemQuantityNotifier()),
+        ChangeNotifierProvider<ItemQuantityNotifier>(
+            create: (_) => ItemQuantityNotifier()),
         ChangeNotifierProvider<StatusProvider>(create: (_) => StatusProvider()),
       ],
       child: Builder(
         builder: (context) {
-          final itemQuantityNotifier = Provider.of<ItemQuantityNotifier>(context, listen: false);
+          final itemQuantityNotifier =
+              Provider.of<ItemQuantityNotifier>(context, listen: false);
           return ChangeNotifierProvider<CartProvider>(
-            create: (_) => CartProvider(itemQuantityNotifier: itemQuantityNotifier),
+            create: (_) =>
+                CartProvider(itemQuantityNotifier: itemQuantityNotifier),
             child: MyApp(),
           );
         },

@@ -3,6 +3,7 @@ import 'package:kuis_statemanagement/providers/auth_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:kuis_statemanagement/providers/status_provider.dart';
 import 'package:kuis_statemanagement/pages/home_page.dart';
+import 'package:kuis_statemanagement/providers/cart_provider.dart';
 
 class StatusPesananPage extends StatelessWidget {
   final int userId; // Mendefinisikan userId
@@ -12,6 +13,7 @@ class StatusPesananPage extends StatelessWidget {
   Widget build(BuildContext context) {
     // Mendapatkan instance dari StatusProvider
     final statusProvider = Provider.of<StatusProvider>(context, listen: false);
+    final cartProvider = Provider.of<CartProvider>(context, listen: false);
 
     return FutureBuilder<void>(
       future: statusProvider.fetchStatus(
@@ -202,6 +204,10 @@ class StatusPesananPage extends StatelessWidget {
                         userId,
                         Provider.of<AuthProvider>(context, listen: false).token,
                       );
+                      await cartProvider.deleteAllItemCart(
+                        userId,
+                        Provider.of<AuthProvider>(context, listen: false).token,
+                      );
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(builder: (context) => HomePage()),
@@ -226,6 +232,7 @@ class StatusPesananPage extends StatelessWidget {
                       ),
                     );
                   }
+
                   // Jika status bukan "belum_bayar", "sudah_bayar", "pesanan_diterima", atau "pesanan_ditolak"
                   else {
                     return ListTile(
