@@ -76,7 +76,7 @@ class HomePage extends StatelessWidget {
                           Icon(Icons.search),
                           SizedBox(width: 10),
                           Expanded(
-                            child: TextField(
+                            child: TextFormField(
                               decoration: InputDecoration(
                                 hintText: "Cari Makanan",
                                 border: InputBorder.none,

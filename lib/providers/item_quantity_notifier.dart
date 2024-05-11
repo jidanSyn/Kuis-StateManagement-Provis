@@ -23,4 +23,8 @@ class ItemQuantityNotifier extends ChangeNotifier {
   Map<int, int> getAllItemQuantities() {
     return this._quantities;
   }
+
+  void removeItem(int item_id) {
+    _quantities.remove(item_id);
+  }
 }

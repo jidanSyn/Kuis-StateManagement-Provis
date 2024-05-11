@@ -60,7 +60,6 @@ class ItemProvider with ChangeNotifier {
 }
 
 
-
   // void addItemToSelected(Item item) {
   //   final existingItem = _selectedItems.firstWhere(
   //     (selectedItem) => selectedItem.id == item.id,
