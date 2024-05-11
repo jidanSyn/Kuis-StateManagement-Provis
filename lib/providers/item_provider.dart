@@ -34,37 +34,5 @@ class ItemProvider with ChangeNotifier {
     }
   }
 
-  // void addItemToSelected(Item item) {
-  //   final existingItem = _selectedItems.firstWhere(
-  //     (selectedItem) => selectedItem.id == item.id,
-  //     orElse: () => Item(id: item.id, title: item.title, description: item.description, img_name: item.img_name, price: item.price),
-  //   );
 
-  //   if (existingItem.quantity < item.quantity) {
-  //     existingItem.quantity++;
-  //   }
-
-  //   if (!_selectedItems.contains(existingItem)) {
-  //     _selectedItems.add(existingItem);
-  //   }
-  //   notifyListeners(); // Notify listeners of change
-  // }
-
-  // // Method to remove item from selected items
-  // void removeItemFromSelected(Item item) {
-  //   final existingItem = _selectedItems.firstWhere(
-  //     (selectedItem) => selectedItem.id == item.id,
-  //     orElse: () => Item(id: item.id, title: item.title, description: item.description, img_name: item.img_name, price: item.price),
-  //   );
-
-  //   if (existingItem.quantity > 0) {
-  //     existingItem.quantity--;
-  //   }
-
-  //   if (existingItem.quantity == 0) {
-  //     _selectedItems.remove(existingItem);
-  //   }
-
-  //   notifyListeners(); // Notify listeners of change
-  // }
 }

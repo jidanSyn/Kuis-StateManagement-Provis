@@ -19,5 +19,6 @@ class Item {
         img_name: json['img_name']
       );
   }
+
 }
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kuis_statemanagement/pages/home_page.dart';
 import 'package:kuis_statemanagement/pages/keranjang_page.dart';
 import 'package:kuis_statemanagement/pages/login_page.dart';
+import 'package:kuis_statemanagement/providers/cart_provider.dart';
 import 'package:kuis_statemanagement/providers/item_provider.dart';
 import 'package:kuis_statemanagement/providers/item_quantity_notifier.dart';
 import 'package:kuis_statemanagement/providers/login_provider.dart';
@@ -14,14 +15,22 @@ void main() {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => AuthProvider()),
-        ChangeNotifierProvider(create: (_) => LoginProvider()),
-        ChangeNotifierProvider(create: (_) => UserProvider()),
-        ChangeNotifierProvider(create: (_) => ItemProvider()),
-        ChangeNotifierProvider(create: (_) => ItemQuantityNotifier()),
-        ChangeNotifierProvider(create: (_) => StatusProvider()),
+        ChangeNotifierProvider<AuthProvider>(create: (_) => AuthProvider()),
+        ChangeNotifierProvider<LoginProvider>(create: (_) => LoginProvider()),
+        ChangeNotifierProvider<UserProvider>(create: (_) => UserProvider()),
+        ChangeNotifierProvider<ItemProvider>(create: (_) => ItemProvider()),
+        ChangeNotifierProvider<ItemQuantityNotifier>(create: (_) => ItemQuantityNotifier()),
+        ChangeNotifierProvider<StatusProvider>(create: (_) => StatusProvider()),
       ],
-      child: MyApp(),
+      child: Builder(
+        builder: (context) {
+          final itemQuantityNotifier = Provider.of<ItemQuantityNotifier>(context, listen: false);
+          return ChangeNotifierProvider<CartProvider>(
+            create: (_) => CartProvider(itemQuantityNotifier: itemQuantityNotifier),
+            child: MyApp(),
+          );
+        },
+      ),
     ),
   );
 }

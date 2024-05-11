@@ -101,15 +101,14 @@ import 'package:kuis_statemanagement/widgets/item_quantity.dart';
               floatingActionButton: FloatingActionButton(
                   onPressed: () async {
                     // i want to print item quantities here
-                    await Provider.of<ItemQuantityNotifier>(context, listen: false).getAllItemQuantities();
-                    // print(itemQuantities);
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => KeranjangPage(
-                                userId: userProvider.user!.id,
-                              )),
-                    );
+
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => KeranjangPage(
+                                  userId: userProvider.user!.id,
+                                )),
+                      );
                   },
                   child: badges.Badge(
                     badgeContent: Text(
