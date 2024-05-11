@@ -11,6 +11,13 @@ import 'package:provider/provider.dart';
 import 'package:kuis_statemanagement/providers/auth_provider.dart';
 import 'package:kuis_statemanagement/providers/user_provider.dart';
 
+/*
+  Kuis Provis State Management
+  Anggota:
+    - Alfen Fajri Nurulhaq (2201431)
+    - Jidan Abdurahman Aufan (2205422)
+ */
+
 void main() {
   runApp(
     MultiProvider(

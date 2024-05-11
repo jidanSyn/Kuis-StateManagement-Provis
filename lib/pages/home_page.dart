@@ -1,5 +1,6 @@
   import 'package:flutter/cupertino.dart';
   import 'package:flutter/material.dart';
+import 'package:kuis_statemanagement/providers/cart_provider.dart';
 import 'package:kuis_statemanagement/providers/item_quantity_notifier.dart';
   import 'package:kuis_statemanagement/providers/user_provider.dart';
 import 'package:kuis_statemanagement/widgets/item_quantity.dart';
@@ -18,9 +19,15 @@ import 'package:kuis_statemanagement/widgets/item_quantity.dart';
           listen: false); // Access AuthProvider
       final userProvider = Provider.of<UserProvider>(context,
           listen: false); // Access AuthProvider
+      final cartProvider = Provider.of<CartProvider>(context,
+          listen: false);
 
       return FutureBuilder<void>(
-        future: userProvider.fetchUser(authProvider.userId, authProvider.token),
+        future: Future.wait([
+          userProvider.fetchUser(authProvider.userId, authProvider.token),
+          cartProvider.fetchUserCart(authProvider.userId, authProvider.token),
+
+        ]),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             // If the future is still waiting, show a loading indicator
@@ -95,12 +102,14 @@ import 'package:kuis_statemanagement/widgets/item_quantity.dart';
                       style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
                     ),
                   ),
-                  DaftarMakanan(),
+                  DaftarMakanan(userId: userProvider.user!.id,),
                 ],
               ),
               floatingActionButton: FloatingActionButton(
                   onPressed: () async {
                     // i want to print item quantities here
+                      await Provider.of<CartProvider>(context, listen: false).postAllItemsToCart(userProvider.user!.id, Provider.of<AuthProvider>(context, listen: false).token);
+
 
                       Navigator.push(
                         context,
