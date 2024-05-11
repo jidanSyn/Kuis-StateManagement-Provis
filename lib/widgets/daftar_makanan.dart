@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:kuis_statemanagement/models/cart_item.dart';
 import 'package:kuis_statemanagement/providers/auth_provider.dart';
+import 'package:kuis_statemanagement/providers/cart_provider.dart';
 import 'package:kuis_statemanagement/providers/item_provider.dart';
 import 'package:kuis_statemanagement/models/item.dart';
 import 'package:kuis_statemanagement/providers/item_quantity_notifier.dart';
+import 'package:kuis_statemanagement/providers/user_provider.dart';
 import 'package:kuis_statemanagement/widgets/item_quantity.dart';
 import 'package:provider/provider.dart';
 import 'package:kuis_statemanagement/globals.dart';
 
 class DaftarMakanan extends StatelessWidget {
   final bool showButtons;
-  const DaftarMakanan({Key? key, this.showButtons = true}) : super(key: key);
+  final int userId;
+  const DaftarMakanan({Key? key, required this.userId, this.showButtons = true}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +44,7 @@ class DaftarMakanan extends StatelessWidget {
               itemCount: items.length,
               itemBuilder: (context, index) {
                 final item = items[index];
-                if (!showButtons && itemQuantities[item.id] == null) {
+                if (!showButtons && (itemQuantities[item.id] == null || itemQuantities[item.id] == 0)) {
                   return SizedBox(
                     width: 0,
                     height: 0,
@@ -117,10 +121,20 @@ class DaftarMakanan extends StatelessWidget {
                                                   ),
                                                   SizedBox(width: 5),
                                                   IconButton(
-                                                    onPressed:
-                                                        () {}, // add item
-                                                    icon: Icon(Icons
-                                                        .remove_circle_outline_outlined),
+                                                    onPressed: () async {
+                                                        print("pressed");
+                                                      await Provider.of<CartProvider>(context, listen: false).deleteItemByItemId(
+                                                          item.id,
+                                                          userId,
+                                                          token,
+                                                          false
+                                                        );
+
+                                                        print("finished");
+
+
+                                                    }, // add item
+                                                    icon: Icon(Icons.remove_circle_outline_outlined),
                                                   ),
                                                 ],
                                               ),
@@ -144,3 +158,6 @@ class DaftarMakanan extends StatelessWidget {
     );
   }
 }
+
+
+
