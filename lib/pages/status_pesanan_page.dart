@@ -167,7 +167,11 @@ class StatusPesananPage extends StatelessWidget {
                     );
                   } else if (statusText == 'pesanan_selesai') {
                     // Menambahkan penundaan 3 detik sebelum kembali ke halaman utama
-                    Future.delayed(Duration(seconds: 3), () {
+                    Future.delayed(Duration(seconds: 3), () async {
+                      await statusProvider.postHarapBayar(
+                        userId,
+                        Provider.of<AuthProvider>(context, listen: false).token,
+                      );
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(builder: (context) => HomePage()),
@@ -193,7 +197,11 @@ class StatusPesananPage extends StatelessWidget {
                     );
                   } else if (statusText == 'pesanan_ditolak') {
                     // Menambahkan penundaan 3 detik sebelum kembali ke halaman utama
-                    Future.delayed(Duration(seconds: 3), () {
+                    Future.delayed(Duration(seconds: 3), () async {
+                      await statusProvider.postHarapBayar(
+                        userId,
+                        Provider.of<AuthProvider>(context, listen: false).token,
+                      );
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(builder: (context) => HomePage()),
